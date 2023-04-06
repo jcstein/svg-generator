@@ -2,10 +2,13 @@ import { Button, VStack } from "@chakra-ui/react";
 import {
   FaGlobe,
 } from "react-icons/fa";
+import SvgGenerator from "./SvgGenerator";
 
-export const Tree = () => {
+export const Content = () => {
   return (
     <VStack spacing={4} direction="column" align="center" width="90%">
+      <SvgGenerator />
+      <br />
       <Button
         colorScheme="purple"
         size="lg"
