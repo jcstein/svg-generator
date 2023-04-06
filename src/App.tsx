@@ -1,3 +1,5 @@
+// @ts-ignore
+
 import { VStack, Flex, Link, Avatar } from "@chakra-ui/react";
 import { Topbuttons } from "./Components/topbuttons";
 import { About } from "./Components/about";

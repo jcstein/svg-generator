@@ -1,3 +1,5 @@
+// @ts-ignore
+
 import React, { useState } from "react";
 import {
   Input,
@@ -9,8 +11,7 @@ import {
   Heading,
   VStack,
   Code,
-  Text,
-  Link
+  Text
 } from "@chakra-ui/react";
 
 interface Props {}
@@ -19,6 +20,7 @@ const SvgGenerator: React.FC<Props> = () => {
   const [inputText, setInputText] = useState("");
   const [base64Svg, setBase64Svg] = useState("");
   const [displaySvg, setDisplaySvg] = useState("");
+  const [decodedText, setDecodedText] = useState("");
   const { hasCopied, onCopy } = useClipboard(base64Svg);
 
   const createSvg = (text: string) => {
@@ -40,6 +42,15 @@ const SvgGenerator: React.FC<Props> = () => {
 
   const handleDisplayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDisplaySvg(e.target.value);
+  };
+
+  const handleDecodeBase64 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const decoded = atob(e.target.value);
+      setDecodedText(decoded);
+    } catch (error) {
+      setDecodedText("Error decoding base64 input");
+    }
   };
 
   return (
@@ -75,8 +86,18 @@ const SvgGenerator: React.FC<Props> = () => {
               <Text>Copy only the data retrieved, without quotes, to your clipboard:</Text>
               <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight 185320 | jq '.result.dah' -r)" GHTmQvXd5Yk= | jq '.result[0].Shares[0]' | tr -d '"' | pbcopy</Code>
               <br/>
-              <Heading size="md" pb="3">5. Convert to text, parse out metadata</Heading>
-              <Text>You can use the <Link href="https://base64.guru/converter/decode/text" target="_blank" rel="noopener noreferrer">base64.guru tool</Link>. Copy the text inside of the quotes.</Text>
+              <Heading size="md" pb="3">5. Convert to text, parse out metadata</Heading>              <Input
+                placeholder="Enter base64 input"
+                onChange={handleDecodeBase64} // Add this line
+                width="300px"
+                textAlign={"center"}
+              />
+              <Textarea // Add this component
+                mt={2}
+                value={decodedText}
+                isReadOnly
+                width="300px"
+              />
               <br />
               <Heading size="md" pb="3">6. Display the SVG you retrieved from Celestia</Heading>
               <Input
@@ -88,7 +109,7 @@ const SvgGenerator: React.FC<Props> = () => {
               />
               {displaySvg && (
                 <Box mt={4}>
-                  <img src={displaySvg} alt="Retrieved SVG" width="300px" />
+                  <img src={displaySvg} alt="Error displaying SVG, please check your input" width="300px" />
                 </Box>
               )}
             </VStack>
