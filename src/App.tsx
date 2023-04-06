@@ -25,7 +25,7 @@ function App() {
              This website is{" "}
              <Link href="https://github.com/jcstein/svg-generator" isExternal>
                 open-source
-             </Link>
+             </Link> and <Link href="https://plausible.io/based64.xyz/" isExternal>analytics</Link> are GDPR compliant
           </Text>
         </VStack>
       </Flex>

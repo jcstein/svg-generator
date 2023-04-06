@@ -10,7 +10,8 @@ import {
   Heading,
   VStack,
   Code,
-  Text
+  Text,
+  Link
 } from "@chakra-ui/react";
 
 interface Props {}
@@ -155,7 +156,10 @@ const SvgGenerator: React.FC<Props> = () => {
               {displaySvg && (
                 <Box mt={4}>
                   <img src={displaySvg} alt="Error displaying SVG, please check your input" width="300px" />
-                  <Text>Do you want to see that it really worked? Paste the SVG into your browser's search bar 🧙‍♂️</Text>
+                  <Text mb="3">Do you want to see that it really worked? Paste the SVG into your browser's search bar 🧙‍♂️</Text>
+                  <Text>Did you have fun with this tutorial? Share a screenshot of your SVG on your favorite social media platform ✍️</Text>
+                  <br/>
+                  <Heading size="md" pb="3">9. Build your next project at <Link href="https://docs.celestia.org" isExternal>docs.celestia.org</Link></Heading>
                 </Box>
               )}
             </VStack>
