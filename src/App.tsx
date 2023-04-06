@@ -15,7 +15,7 @@ function App() {
         alignSelf="center"
         minHeight="90vh"
       >
-        <VStack p="3" width="100%" maxWidth="1000px">
+        <VStack p="3" mb="3" width="100%" maxWidth="1000px">
           <About />
           <Content />
           <Link href="https://celestia.org" pt="8" isExternal>

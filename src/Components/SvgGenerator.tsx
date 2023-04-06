@@ -67,7 +67,7 @@ const SvgGenerator: React.FC<Props> = () => {
             <VStack alignItems={"left"}>
               <img src={base64Svg} alt="Generated SVG" width="300px" />
               <Heading size="md" pb="3">2. Copy the SVG to your clipboard</Heading>
-              <Textarea mt={2} value={base64Svg} isReadOnly width="300px" />
+              <Textarea mt={2} value={base64Svg} isReadOnly maxWidth="1000px" minWidth="300px" height="125px"/>
               <Button onClick={onCopy} mb="7" width="300px">
                 {hasCopied ? "Copied 🎉" : "Copy to Clipboard"}
               </Button>
@@ -86,17 +86,22 @@ const SvgGenerator: React.FC<Props> = () => {
               <Text>Copy only the data retrieved, without quotes, to your clipboard:</Text>
               <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight 185320 | jq '.result.dah' -r)" GHTmQvXd5Yk= | jq '.result[0].Shares[0]' | tr -d '"' | pbcopy</Code>
               <br/>
-              <Heading size="md" pb="3">5. Convert to text, parse out metadata</Heading>              <Input
-                placeholder="Enter base64 input"
+              <Heading size="md" pb="3">5. Convert to text, parse out metadata</Heading>
+              <Input
+                placeholder="Enter base64 input from Celestia"
                 onChange={handleDecodeBase64} // Add this line
-                width="300px"
                 textAlign={"center"}
+                maxWidth="1000px"
+                minWidth="300px"
+                height="125px"
               />
               <Textarea // Add this component
                 mt={2}
                 value={decodedText}
                 isReadOnly
-                width="300px"
+                maxWidth="1000px"
+                minWidth="300px"
+                height="125px"
               />
               <br />
               <Heading size="md" pb="3">6. Display the SVG you retrieved from Celestia</Heading>
@@ -104,7 +109,9 @@ const SvgGenerator: React.FC<Props> = () => {
                 placeholder="Enter the base64 SVG"
                 value={displaySvg}
                 onChange={handleDisplayChange}
-                width="300px"
+                maxWidth="1000px"
+                minWidth="300px"
+                height="125px"
                 textAlign={"center"}
               />
               {displaySvg && (
