@@ -10,22 +10,22 @@ export const Content = () => {
       <SvgGenerator />
       <br />
       <Button
-        colorScheme="purple"
+        colorScheme="pink"
         size="lg"
         rightIcon={<FaGlobe />}
         onClick={() => window.open("https://node-rpc-docs.celestia.org", "_blank")}
-        width="100%"
+        width="200px"
         _hover={{ transform: "scale(1.1)" }}
         rounded="full"
       >
         RPC API
       </Button>
       <Button
-        colorScheme="purple"
+        colorScheme="pink"
         size="lg"
         rightIcon={<FaGlobe />}
         onClick={() => window.open("https://docs.celestia.org/developers/rpc-tutorial/", "_blank")}
-        width="100%"
+        width="200px"
         _hover={{ transform: "scale(1.1)" }}
         rounded="full"
       >

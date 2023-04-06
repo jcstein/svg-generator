@@ -6,7 +6,6 @@ import {
   Button,
   useClipboard,
   Flex,
-  Center,
   Heading,
   VStack,
   Code,
@@ -20,6 +19,7 @@ const SvgGenerator: React.FC<Props> = () => {
   const [inputText, setInputText] = useState("");
   const [base64Svg, setBase64Svg] = useState("");
   const [displaySvg, setDisplaySvg] = useState("");
+  // const [decodedText, setDecodedText] = useState("");
   const { hasCopied, onCopy } = useClipboard(base64Svg);
 
   const createSvg = (text: string) => {
@@ -43,24 +43,27 @@ const SvgGenerator: React.FC<Props> = () => {
     setDisplaySvg(e.target.value);
   };
 
+  // const handleDecodeClick = () => {
+  //   const decodedString = atob(displaySvg.split(',')[1]);
+  //   setDecodedText(decodedString);
+  // };
+
   return (
-    <Center>
-      <Flex direction="column" alignItems="center" w="100%">
+      <Flex direction="column" alignItems="left" w="100%">
         <Heading size="md" pb="3">1. Generate your SVG</Heading>
         <Input
           placeholder="Enter text to generate SVG"
           value={inputText}
           onChange={handleInputChange}
           width="300px"
-          textAlign={"center"}
         />
         {inputText && (
           <Box mt={4}>
-            <VStack>
+            <VStack alignItems={"left"}>
               <img src={base64Svg} alt="Generated SVG" width="300px" />
               <Heading size="md" pb="3">2. Copy the SVG to your clipboard</Heading>
               <Textarea mt={2} value={base64Svg} isReadOnly width="300px" />
-              <Button onClick={onCopy} mb="7">
+              <Button onClick={onCopy} mb="7" width="300px">
                 {hasCopied ? "Copied 🎉" : "Copy to Clipboard"}
               </Button>
               <br/>
@@ -79,7 +82,30 @@ const SvgGenerator: React.FC<Props> = () => {
               <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight 185320 | jq '.result.dah' -r)" GHTmQvXd5Yk= | jq '.result[0].Shares[0]' | tr -d '"' | pbcopy</Code>
               <br/>
               <Heading size="md" pb="3">5. Convert to text, parse out metadata</Heading>
-              <Text>You can use the <Link href="https://base64.guru/converter/decode/text" >base64.guru tool</Link>. Copy the text inside of the quotes.</Text>
+              {/* <Box mt={4}>
+                <Heading size="md" pb="3">Decode Base64 Text</Heading>
+                <Input
+                  placeholder="Enter base64 text"
+                  value={displaySvg}
+                  onChange={handleDisplayChange}
+                  width="300px"
+                  textAlign={"center"}
+                />
+                <Button onClick={handleDecodeClick} mb="7">
+                  Decode
+                </Button>
+                {decodedText && (
+                  <Box mt={4}>
+                    <Textarea
+                      value={decodedText}
+                      isReadOnly
+                      width="300px"
+                      placeholder="Decoded text"
+                    />
+                  </Box>
+                )}
+              </Box> */}
+            <Text>You can use the <Link href="https://base64.guru/converter/decode/text" target="_blank" rel="noopener noreferrer">base64.guru tool</Link>. Copy the text inside of the quotes.</Text>
               <br />
               <Heading size="md" pb="3">6. Display the SVG you retrieved from Celestia</Heading>
               <Input
@@ -98,7 +124,6 @@ const SvgGenerator: React.FC<Props> = () => {
           </Box>
         )}
       </Flex>
-    </Center>
   );
 };
 

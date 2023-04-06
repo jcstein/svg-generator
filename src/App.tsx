@@ -13,11 +13,11 @@ function App() {
         alignSelf="center"
         minHeight="90vh"
       >
-        <VStack p="8" width="100%">
+        <VStack p="3" width="100%" maxWidth="1000px">
           <About />
           <Content />
-          <Link href="https://joshcs.lol" pt="8" isExternal>
-            <Avatar src="/jcs.png" mx="auto" size="md" />
+          <Link href="https://celestia.org" pt="8" isExternal>
+            <Avatar src="/celestia.svg" mx="auto" size="md" />
           </Link>
         </VStack>
       </Flex>
