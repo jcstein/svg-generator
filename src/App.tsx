@@ -1,6 +1,6 @@
 // @ts-ignore
 
-import { VStack, Flex, Link, Avatar } from "@chakra-ui/react";
+import { VStack, Flex, Link, Avatar, Text } from "@chakra-ui/react";
 import { Topbuttons } from "./Components/topbuttons";
 import { About } from "./Components/about";
 import { Content } from "./Components/content";
@@ -21,6 +21,12 @@ function App() {
           <Link href="https://celestia.org" pt="8" isExternal>
             <Avatar src="/celestia.svg" mx="auto" size="md" />
           </Link>
+          <Text>
+             This website is{" "}
+             <Link href="https://github.com/jcstein/svg-generator" isExternal>
+                open-source
+             </Link>
+          </Text>
         </VStack>
       </Flex>
     </div>

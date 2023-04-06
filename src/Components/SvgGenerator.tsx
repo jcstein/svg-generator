@@ -1,5 +1,4 @@
 // @ts-ignore
-
 import React, { useState } from "react";
 import {
   Input,
@@ -15,6 +14,19 @@ import {
 } from "@chakra-ui/react";
 
 interface Props {}
+
+interface ClipboardButtonProps {
+  text: string;
+}
+
+const ClipboardButton: React.FC<ClipboardButtonProps> = ({ text }) => {
+  const { hasCopied, onCopy } = useClipboard(text);
+  return (
+    <Button size="sm" onClick={onCopy} ml={2}>
+      {hasCopied ? "Copied" : "Copy"}
+    </Button>
+  );
+};
 
 const SvgGenerator: React.FC<Props> = () => {
   const [inputText, setInputText] = useState("");
@@ -55,9 +67,9 @@ const SvgGenerator: React.FC<Props> = () => {
 
   return (
       <Flex direction="column" alignItems="left" w="100%">
-        <Heading size="md" pb="3">1. Generate your SVG</Heading>
+        <Heading size="md" pb="3">1. Start typing to generate your SVG 🎨</Heading>
         <Input
-          placeholder="Enter text to generate SVG"
+          placeholder="Enter text to appear on your SVG"
           value={inputText}
           onChange={handleInputChange}
           width="300px"
@@ -66,57 +78,84 @@ const SvgGenerator: React.FC<Props> = () => {
           <Box mt={4}>
             <VStack alignItems={"left"}>
               <img src={base64Svg} alt="Generated SVG" width="300px" />
-              <Heading size="md" pb="3">2. Copy the SVG to your clipboard</Heading>
+              <Heading size="md" pb="3">2. Copy the SVG to your clipboard 📋</Heading>
               <Textarea mt={2} value={base64Svg} isReadOnly maxWidth="1000px" minWidth="300px" height="125px"/>
               <Button onClick={onCopy} mb="7" width="300px">
                 {hasCopied ? "Copied 🎉" : "Copy to Clipboard"}
               </Button>
               <br/>
-              <Heading size="md" pb="3">3. Post the data to Celestia as plain text</Heading>
+              <Heading size="md" pb="3">3. Save the SVG as a variable in your terminal 💾</Heading>
+              <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">export SVG="[your SVG from step 2]"</Code>
+              <br/>
+              <Heading size="md" pb="3">4. Post the data to Celestia as plain text 🚀</Heading>
               <Text>First, set your auth token:</Text>
-              <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">export CELESTIA_NODE_AUTH_TOKEN=$(celestia light auth admin --p2p.network blockspacerace)</Code>
-              <Text>Next, post the SVG:</Text>
-              <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc state SubmitPayForBlob GHTmQvXd5Yk= '"[the SVG that you copied above goes here]"' 2000 100000</Code>
-              <br/>
-              <Heading size="md" pb="3">4. Retrieve the data from Celestia</Heading>
-              <Text>Retrieve the shares by namespace and block:</Text>
-              <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight [the block height of your transaction] | jq '.result.dah' -r)" GHTmQvXd5Yk=</Code>
+              <Flex>
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">export CELESTIA_NODE_AUTH_TOKEN=$(celestia light auth admin --p2p.network blockspacerace)</Code>
+                <ClipboardButton text='export CELESTIA_NODE_AUTH_TOKEN=$(celestia light auth admin --p2p.network blockspacerace)' />
+              </Flex>
+              <Text>Next, post the SVG and save the output:</Text>
+              <Flex>
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">export OUTPUT=$(celestia rpc state SubmitPayForBlob GHTmQvXd5Yk= "\"$SVG\"" 2000 100000)</Code>
+                <ClipboardButton text={`export OUTPUT=$(celestia rpc state SubmitPayForBlob GHTmQvXd5Yk= "\\"$SVG\\"" 2000 100000)`} />
+              </Flex>
+              <br />
+              <Heading size="md" pb="3">5. Set the block height to retrieve your data 🧊</Heading>
+              <Flex>
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">export HEIGHT=$(echo "$OUTPUT" | jq '.result.height') && echo "Height: $HEIGHT"</Code>
+                <ClipboardButton text={`export HEIGHT=$(echo "$OUTPUT" | jq '.result.height') && echo "Height: $HEIGHT"`} />
+              </Flex>
+              <br />
+              <Heading size="md" pb="3">6. Retrieve the data from Celestia ✨</Heading>
+              <Text>Retrieve the shares by namespace and block height:</Text>
+              <Flex>
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight $HEIGHT | jq '.result.dah' -r)" GHTmQvXd5Yk=</Code>
+                <ClipboardButton text={`celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight $HEIGHT | jq '.result.dah' -r)" GHTmQvXd5Yk=`} />
+              </Flex>
               <Text>Display only the data retrieved:</Text>
-              <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight [the block height of your transaction] | jq '.result.dah' -r)" GHTmQvXd5Yk= | jq '.result[0].Shares[0]'</Code>
+              <Flex>
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight $HEIGHT | jq '.result.dah' -r)" GHTmQvXd5Yk= | jq '.result[0].Shares[0]'</Code>
+                <ClipboardButton text={`celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight $HEIGHT | jq '.result.dah' -r)" GHTmQvXd5Yk= | jq '.result[0].Shares[0]'`} />
+              </Flex>
               <Text>Copy only the data retrieved, without quotes, to your clipboard:</Text>
-              <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight 185320 | jq '.result.dah' -r)" GHTmQvXd5Yk= | jq '.result[0].Shares[0]' | tr -d '"' | pbcopy</Code>
+              <Flex>
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight $HEIGHT | jq '.result.dah' -r)" GHTmQvXd5Yk= | jq '.result[0].Shares[0]' | tr -d '"' | pbcopy</Code>
+                <ClipboardButton text={`celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight $HEIGHT | jq '.result.dah' -r)" GHTmQvXd5Yk= | jq '.result[0].Shares[0]' | tr -d '"' | pbcopy`} />
+              </Flex>
               <br/>
-              <Heading size="md" pb="3">5. Convert to text, parse out metadata</Heading>
-              <Input
-                placeholder="Enter base64 input from Celestia"
-                onChange={handleDecodeBase64} // Add this line
-                textAlign={"center"}
+              <Heading size="md" pb="3">7. Convert to text and parse out the metadata</Heading>
+              <Textarea
+                placeholder="Paste base64 input from step 6"
+                onChange={handleDecodeBase64}
+                textAlign="left"
                 maxWidth="1000px"
                 minWidth="300px"
-                height="125px"
+                resize="vertical"
               />
-              <Textarea // Add this component
+              <Text>Copy <Code>data:image/svg+xml;base64,abcdefg[...]A=</Code> to paste in step 8</Text>
+              <Textarea
                 mt={2}
                 value={decodedText}
                 isReadOnly
                 maxWidth="1000px"
                 minWidth="300px"
-                height="125px"
+                minHeight="125px"
+                placeholder="Decoded data retreived from Celestia"
               />
               <br />
-              <Heading size="md" pb="3">6. Display the SVG you retrieved from Celestia</Heading>
-              <Input
-                placeholder="Enter the base64 SVG"
+              <Heading size="md" pb="3">8. Display the SVG you retrieved from Celestia</Heading>
+              <Textarea
+                placeholder="Enter the parsed base64 SVG"
                 value={displaySvg}
                 onChange={handleDisplayChange}
                 maxWidth="1000px"
                 minWidth="300px"
-                height="125px"
-                textAlign={"center"}
+                textAlign="left"
+                resize="vertical"
               />
               {displaySvg && (
                 <Box mt={4}>
                   <img src={displaySvg} alt="Error displaying SVG, please check your input" width="300px" />
+                  <Text>Do you want to see that it really worked? Paste the SVG into your browser's search bar 🧙‍♂️</Text>
                 </Box>
               )}
             </VStack>
