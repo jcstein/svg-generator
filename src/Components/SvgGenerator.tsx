@@ -53,11 +53,11 @@ const SvgGenerator: React.FC<Props> = () => {
     createSvg(e.target.value);
   };
 
-  const handleDisplayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDisplayChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDisplaySvg(e.target.value);
   };
 
-  const handleDecodeBase64 = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDecodeBase64 = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     try {
       const decoded = atob(e.target.value);
       setDecodedText(decoded);
