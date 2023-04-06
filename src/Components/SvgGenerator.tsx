@@ -19,7 +19,6 @@ const SvgGenerator: React.FC<Props> = () => {
   const [inputText, setInputText] = useState("");
   const [base64Svg, setBase64Svg] = useState("");
   const [displaySvg, setDisplaySvg] = useState("");
-  // const [decodedText, setDecodedText] = useState("");
   const { hasCopied, onCopy } = useClipboard(base64Svg);
 
   const createSvg = (text: string) => {
@@ -42,11 +41,6 @@ const SvgGenerator: React.FC<Props> = () => {
   const handleDisplayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDisplaySvg(e.target.value);
   };
-
-  // const handleDecodeClick = () => {
-  //   const decodedString = atob(displaySvg.split(',')[1]);
-  //   setDecodedText(decodedString);
-  // };
 
   return (
       <Flex direction="column" alignItems="left" w="100%">
@@ -82,30 +76,7 @@ const SvgGenerator: React.FC<Props> = () => {
               <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight 185320 | jq '.result.dah' -r)" GHTmQvXd5Yk= | jq '.result[0].Shares[0]' | tr -d '"' | pbcopy</Code>
               <br/>
               <Heading size="md" pb="3">5. Convert to text, parse out metadata</Heading>
-              {/* <Box mt={4}>
-                <Heading size="md" pb="3">Decode Base64 Text</Heading>
-                <Input
-                  placeholder="Enter base64 text"
-                  value={displaySvg}
-                  onChange={handleDisplayChange}
-                  width="300px"
-                  textAlign={"center"}
-                />
-                <Button onClick={handleDecodeClick} mb="7">
-                  Decode
-                </Button>
-                {decodedText && (
-                  <Box mt={4}>
-                    <Textarea
-                      value={decodedText}
-                      isReadOnly
-                      width="300px"
-                      placeholder="Decoded text"
-                    />
-                  </Box>
-                )}
-              </Box> */}
-            <Text>You can use the <Link href="https://base64.guru/converter/decode/text" target="_blank" rel="noopener noreferrer">base64.guru tool</Link>. Copy the text inside of the quotes.</Text>
+              <Text>You can use the <Link href="https://base64.guru/converter/decode/text" target="_blank" rel="noopener noreferrer">base64.guru tool</Link>. Copy the text inside of the quotes.</Text>
               <br />
               <Heading size="md" pb="3">6. Display the SVG you retrieved from Celestia</Heading>
               <Input
