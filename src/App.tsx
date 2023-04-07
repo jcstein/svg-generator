@@ -21,7 +21,7 @@ function App() {
           <Link href="https://celestia.org" pt="8" isExternal>
             <Avatar src="/celestia.svg" mx="auto" size="md" />
           </Link>
-          <Text>
+          <Text textAlign="center">
              This website is{" "}
              <Link href="https://github.com/jcstein/svg-generator" isExternal>
                 open-source

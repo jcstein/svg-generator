@@ -13,8 +13,19 @@ export const Content = () => {
         colorScheme="pink"
         size="lg"
         rightIcon={<FaGlobe />}
+        onClick={() => window.open("https://docs.celestia.org/nodes/celestia-node", "_blank")}
+        width="300px"
+        _hover={{ transform: "scale(1.1)" }}
+        rounded="full"
+      >
+        Install Celestia Node
+      </Button>
+      <Button
+        colorScheme="pink"
+        size="lg"
+        rightIcon={<FaGlobe />}
         onClick={() => window.open("https://node-rpc-docs.celestia.org", "_blank")}
-        width="200px"
+        width="300px"
         _hover={{ transform: "scale(1.1)" }}
         rounded="full"
       >
@@ -25,7 +36,7 @@ export const Content = () => {
         size="lg"
         rightIcon={<FaGlobe />}
         onClick={() => window.open("https://docs.celestia.org/developers/rpc-tutorial/", "_blank")}
-        width="200px"
+        width="300px"
         _hover={{ transform: "scale(1.1)" }}
         rounded="full"
       >
