@@ -35,7 +35,7 @@ export const Content = () => {
         colorScheme="pink"
         size="lg"
         rightIcon={<FaGlobe />}
-        onClick={() => window.open("https://docs.celestia.org/developers/rpc-tutorial/", "_blank")}
+        onClick={() => window.open("https://docs.celestia.org/developers/node-tutorial/", "_blank")}
         width="300px"
         _hover={{ transform: "scale(1.1)" }}
         rounded="full"
