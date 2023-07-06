@@ -91,8 +91,8 @@ const SvgGenerator: React.FC<Props> = () => {
               <Heading size="md" pb="3">4. Post the data to Celestia as plain text 🚀</Heading>
               <Text>First, set your auth token:</Text>
               <Flex>
-                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">export CELESTIA_NODE_AUTH_TOKEN=$(celestia light auth admin --p2p.network blockspacerace)</Code>
-                <ClipboardButton text='export CELESTIA_NODE_AUTH_TOKEN=$(celestia light auth admin --p2p.network blockspacerace)' />
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">export CELESTIA_NODE_AUTH_TOKEN=$(celestia light auth admin --p2p.network arabica)</Code>
+                <ClipboardButton text='export CELESTIA_NODE_AUTH_TOKEN=$(celestia light auth admin --p2p.network arabica)' />
               </Flex>
               <Text>Next, post the SVG and save the output:</Text>
               <Flex>
