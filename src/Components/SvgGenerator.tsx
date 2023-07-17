@@ -96,31 +96,31 @@ const SvgGenerator: React.FC<Props> = () => {
               </Flex>
               <Text>Next, post the SVG and save the output:</Text>
               <Flex>
-                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">export OUTPUT=$(celestia rpc blob Submit 0x42690c204d39600fddd3 "\"$SVG\"")</Code>
-                <ClipboardButton text={`export OUTPUT=$(celestia rpc blob Submit 0x42690c204d39600fddd3 "\\"$SVG\\"")`} />
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">export OUTPUT=$(celestia rpc state SubmitPayForBlob GHTmQvXd5Yk= "\"$SVG\"" 2000 100000)</Code>
+                <ClipboardButton text={`export OUTPUT=$(celestia rpc state SubmitPayForBlob GHTmQvXd5Yk= "\\"$SVG\\"" 2000 100000)`} />
               </Flex>
               <br />
               <Heading size="md" pb="3">5. Set the block height to retrieve your data 🧊</Heading>
               <Flex>
-                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">export HEIGHT=$(echo "$OUTPUT" | jq '.result') && echo "Height: $HEIGHT"</Code>
-                <ClipboardButton text={`export HEIGHT=$(echo "$OUTPUT" | jq '.result') && echo "Height: $HEIGHT"`} />
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">export HEIGHT=$(echo "$OUTPUT" | jq '.result.height') && echo "Height: $HEIGHT"</Code>
+                <ClipboardButton text={`export HEIGHT=$(echo "$OUTPUT" | jq '.result.height') && echo "Height: $HEIGHT"`} />
               </Flex>
               <br />
               <Heading size="md" pb="3">6. Retrieve the data from Celestia ✨</Heading>
               <Text>Retrieve the shares by namespace and block height:</Text>
               <Flex>
-                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc blob GetAll 99391 0x42690c204d39600fddd3</Code>
-                <ClipboardButton text={`celestia rpc blob GetAll 99391 0x42690c204d39600fddd3`} />
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight $HEIGHT | jq '.result.dah' -r)" GHTmQvXd5Yk=</Code>
+                <ClipboardButton text={`celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight $HEIGHT | jq '.result.dah' -r)" GHTmQvXd5Yk=`} />
               </Flex>
               <Text>Display only the data retrieved:</Text>
               <Flex>
-                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc blob GetAll 99391 0x42690c204d39600fddd3 | jq '.result[0].data'</Code>
-                <ClipboardButton text={`celestia rpc blob GetAll 99391 0x42690c204d39600fddd3 | jq '.result[0].data'`} />
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight $HEIGHT | jq '.result.dah' -r)" GHTmQvXd5Yk= | jq '.result[0].Shares[0]'</Code>
+                <ClipboardButton text={`celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight $HEIGHT | jq '.result.dah' -r)" GHTmQvXd5Yk= | jq '.result[0].Shares[0]'`} />
               </Flex>
               <Text>Copy only the data retrieved, without quotes, to your clipboard:</Text>
               <Flex>
-                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc blob GetAll 99391 0x42690c204d39600fddd3 | jq '.result[0].data' | pbcopy</Code>
-                <ClipboardButton text={`celestia rpc blob GetAll 99391 0x42690c204d39600fddd3 | jq '.result[0].data' | pbcopy`} />
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight $HEIGHT | jq '.result.dah' -r)" GHTmQvXd5Yk= | jq '.result[0].Shares[0]' | tr -d '"' | pbcopy</Code>
+                <ClipboardButton text={`celestia rpc share GetSharesByNamespace "$(celestia rpc header GetByHeight $HEIGHT | jq '.result.dah' -r)" GHTmQvXd5Yk= | jq '.result[0].Shares[0]' | tr -d '"' | pbcopy`} />
               </Flex>
               <br/>
               <Heading size="md" pb="3">7. Convert to text and parse out the metadata</Heading>
