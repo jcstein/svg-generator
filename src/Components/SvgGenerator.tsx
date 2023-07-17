@@ -86,7 +86,7 @@ const SvgGenerator: React.FC<Props> = () => {
               </Button>
               <br/>
               <Heading size="md" pb="3">3. Save the SVG as a variable in your terminal 💾</Heading>
-              <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">export SVG="[your SVG from step 2]"</Code>
+              <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">export SVG="your SVG from step 2"</Code>
               <br/>
               <Heading size="md" pb="3">4. Post the data to Celestia as plain text 🚀</Heading>
               <Text>First, set your auth token:</Text>
