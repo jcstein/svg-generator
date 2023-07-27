@@ -107,20 +107,25 @@ const SvgGenerator: React.FC<Props> = () => {
               </Flex>
               <br />
               <Heading size="md" pb="3">6. Retrieve the data from Celestia ✨</Heading>
+               <Text>Set the block height from above:</Text>
+              <Flex>
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">export HEIGHT=99391</Code>
+                <ClipboardButton text={`export HEIGHT=99391`} />
+              </Flex>
               <Text>Retrieve the shares by namespace and block height:</Text>
               <Flex>
-                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc blob GetAll 99391 0x42690c204d39600fddd3</Code>
-                <ClipboardButton text={`celestia rpc blob GetAll 99391 0x42690c204d39600fddd3`} />
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc blob GetAll $HEIGHT 0x42690c204d39600fddd3</Code>
+                <ClipboardButton text={`celestia rpc blob GetAll $HEIGHT 0x42690c204d39600fddd3`} />
               </Flex>
               <Text>Display only the data retrieved:</Text>
               <Flex>
-                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc blob GetAll 99391 0x42690c204d39600fddd3 | jq '.result[0].data'</Code>
-                <ClipboardButton text={`celestia rpc blob GetAll 99391 0x42690c204d39600fddd3 | jq '.result[0].data'`} />
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc blob GetAll $HEIGHT 0x42690c204d39600fddd3 | jq '.result[0].data'</Code>
+                <ClipboardButton text={`celestia rpc blob GetAll $HEIGHT 0x42690c204d39600fddd3 | jq '.result[0].data'`} />
               </Flex>
               <Text>Copy only the data retrieved, without quotes, to your clipboard:</Text>
               <Flex>
-                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc blob GetAll 99391 0x42690c204d39600fddd3 | jq '.result[0].data' | pbcopy</Code>
-                <ClipboardButton text={`celestia rpc blob GetAll 99391 0x42690c204d39600fddd3 | jq '.result[0].data' | pbcopy`} />
+                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc blob GetAll $HEIGHT 0x42690c204d39600fddd3 | jq '.result[0].data' | pbcopy</Code>
+                <ClipboardButton text={`celestia rpc blob GetAll $HEIGHT 0x42690c204d39600fddd3 | jq '.result[0].data' | pbcopy`} />
               </Flex>
               <br/>
               <Heading size="md" pb="3">7. Convert to text and parse out the metadata</Heading>
