@@ -107,11 +107,6 @@ const SvgGenerator: React.FC<Props> = () => {
               </Flex>
               <br />
               <Heading size="md" pb="3">6. Retrieve the data from Celestia ✨</Heading>
-               <Text>Set the block height from above:</Text>
-              <Flex>
-                <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">export HEIGHT=99391</Code>
-                <ClipboardButton text={`export HEIGHT=99391`} />
-              </Flex>
               <Text>Retrieve the shares by namespace and block height:</Text>
               <Flex>
                 <Code p={2} fontSize="sm" borderRadius="md" whiteSpace="pre-wrap">celestia rpc blob GetAll $HEIGHT 0x42690c204d39600fddd3</Code>
