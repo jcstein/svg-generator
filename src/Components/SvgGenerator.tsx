@@ -60,12 +60,15 @@ const SvgGenerator: React.FC<Props> = () => {
   const handleDecodeBase64 = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     try {
       const decoded = atob(e.target.value);
-      setDecodedText(decoded);
+  
+      const cleanedDecoded = decoded.trim().replace(/^"|"$/g, '');
+      
+      setDecodedText(cleanedDecoded);
     } catch (error) {
       setDecodedText("Error decoding base64 input");
     }
   };
-
+  
   return (
       <Flex direction="column" alignItems="left" w="100%">
         <Heading size="md" pb="3">1. Start typing to generate your SVG 🎨</Heading>
